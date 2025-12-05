@@ -27,7 +27,6 @@ const io = new Server(server, {
 });
 
 registerSocketHandlers(io);
-
 connectDb();
 
 server.listen(port, () => {
