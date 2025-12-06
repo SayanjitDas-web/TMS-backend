@@ -1,3 +1,6 @@
+import { config } from "dotenv";
+config();
+
 export const adminLogin = async (req, res) => {
   try {
     const { password } = req.body;
@@ -7,6 +10,18 @@ export const adminLogin = async (req, res) => {
         message: "please provide the admin password for admin login!",
       });
     }
+    if (password !== process.env.ADMIN_PASS) {
+      res.status(400).json({ error: "Invalid credentials" });
+    }
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV,
+      expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    });
+    res.json({ success: true, token });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
