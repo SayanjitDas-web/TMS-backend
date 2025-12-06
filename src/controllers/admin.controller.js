@@ -4,7 +4,7 @@ export const adminLogin = async (req, res) => {
     if (!password) {
       res.status(401).json({
         success: false,
-        message: "please provide the admin password to admin login!",
+        message: "please provide the admin password for admin login!",
       });
     }
   } catch (err) {
