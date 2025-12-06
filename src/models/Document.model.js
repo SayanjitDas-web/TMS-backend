@@ -12,6 +12,9 @@ const documentSchema = new Schema(
         ref: "Block",
       },
     ],
+    sessionId:{
+      type: String
+    }
   },
   { timestamps: true }
 );

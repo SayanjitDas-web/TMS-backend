@@ -10,12 +10,10 @@ export const createDocument = async (req, res) => {
     }
     const document = await Document.create({ description });
     if (!document) {
-      res
-        .status(400)
-        .json({
-          success: false,
-          message: "something went wrong while creating the document",
-        });
+      res.status(400).json({
+        success: false,
+        message: "something went wrong while creating the document",
+      });
     }
     res
       .status(200)
@@ -29,12 +27,10 @@ export const deleteDocument = async (req, res) => {
   try {
     const { id } = req.id;
     if (!id) {
-      res
-        .status(401)
-        .json({
-          success: false,
-          message: "please provide a id to delete the document!",
-        });
+      res.status(401).json({
+        success: false,
+        message: "please provide a id to delete the document!",
+      });
     }
     const document = await Document.findById(id);
     if (!document) {
@@ -51,18 +47,41 @@ export const getDocument = async (req, res) => {
   try {
     const docId = req.params.docId;
     if (!docId) {
-      res
-        .status(401)
-        .json({
-          success: false,
-          message: "please provide a id to get the document!",
-        });
+      res.status(401).json({
+        success: false,
+        message: "please provide a id to get the document!",
+      });
     }
     const document = await Document.findById(docId);
     if (!document) {
       res.status(404).json({ success: false, message: "document not found!" });
     }
     res.status(200).json({ success: true, document });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+export const updateSessionId = async (req, res) => {
+  try {
+    const { docId, sessionId } = req.body;
+    if (!docId || sessionId) {
+      res.status(401).json({
+        success: false,
+        message:
+          "please provide a document id and session id to updated the session!",
+      });
+    }
+    const document = await Document.findById(docId);
+    if (!document) {
+      res.status(404).json({ success: false, message: "document not found!" });
+    }
+
+    document.sessionId = sessionId
+    await document.save()
+
+    res.status(200).json({ success: true, message: "document session updated!" });
+
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
