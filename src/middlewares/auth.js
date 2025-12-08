@@ -15,7 +15,7 @@ export const auth = (req, res, next) => {
     }
 
     if (!token) {
-        return res.status(401).json({ message: 'No token provided, authorization denied' });
+        return res.status(401).json({ success: false , message: 'No token provided, authorization denied' });
     }
 
     try {
@@ -23,6 +23,6 @@ export const auth = (req, res, next) => {
         req.password = decoded;
         next();
     } catch (err) {
-        return res.status(401).json({ message: 'Invalid token' });
+        return res.status(401).json({ success: false , message: 'Invalid token' });
     }
 };
