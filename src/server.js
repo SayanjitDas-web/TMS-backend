@@ -20,6 +20,18 @@ app.use(express.urlencoded({extended: true}))
 import homeRoute from "./routes/home.route.js";
 app.use("/api/index", homeRoute)
 
+import authRouter from "./routes/auth.route.js"
+app.use("/api/auth", authRouter)
+
+import documentRouter from "./routes/document.route.js"
+app.use("/api/document", documentRouter)
+
+import blockRouter from "./routes/block.route.js"
+app.use("/api/block", blockRouter)
+
+import aiRouter from './routes/ai.route.js'
+app.use("/api/ai", aiRouter)
+
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
