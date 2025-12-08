@@ -2,11 +2,11 @@ import Document from "../models/Document.model.js";
 
 export const createDocument = async (req, res) => {
   try {
-    const { description } = req.body;
-    if (!description && description.length > 10) {
+    const { docname , description } = req.body;
+    if (!description && description.length > 10 || !docname && docname.length < 20) {
       res
         .status(401)
-        .json({ success: false, message: "please provide a description" });
+        .json({ success: false, message: "please provide a description and document name" });
     }
     const document = await Document.create({ description });
     if (!document) {

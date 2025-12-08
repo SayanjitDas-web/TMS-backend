@@ -2,6 +2,10 @@ import mongoose, { Schema } from "mongoose";
 
 const documentSchema = new Schema(
   {
+    docname:{
+      type: String,
+      required: true
+    },
     description: {
       type: String,
       required: true,
