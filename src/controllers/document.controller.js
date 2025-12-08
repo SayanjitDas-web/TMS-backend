@@ -86,3 +86,17 @@ export const updateSessionId = async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
+export const getAllDocument = async ( req , res ) => {
+  try{
+    const documents = await Document.find()
+
+    if (!documents) {
+      res.status(404).json({ success: false, message: "documents not found!" });
+    }
+
+    res.status(200).json({ success: true, documents });
+  }catch(err){
+    res.status(500).json({ success: false, message: err.message });
+  }
+}
