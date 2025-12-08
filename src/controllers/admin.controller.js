@@ -11,9 +11,9 @@ export const adminLogin = async (req, res) => {
       });
     }
     if (password !== process.env.ADMIN_PASS) {
-      res.status(400).json({ error: "Invalid credentials" });
+      res.status(400).json({ success: false, error: "Invalid credentials" });
     }
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ password }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
     res.cookie("token", token, {
@@ -24,5 +24,28 @@ export const adminLogin = async (req, res) => {
     res.json({ success: true, token });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+export const logout = async (req, res) => {
+  try {
+    res.clearCookie("token");
+    res.json({ message: "Logged out successfully" });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+export const checkAuth = async (req, res) => {
+  try {
+    const password = req.password;
+
+    if (password !== process.env.ADMIN_PASS) {
+      res.status(400).json({ success: false, error: "Invalid credentials" });
+    }
+
+    res.json({ success: true, message: "auth successfully" });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
   }
 };

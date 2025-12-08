@@ -7,10 +7,12 @@ import express from "express";
 import connectDb from "./config/db.js";
 import registerSocketHandlers from "./sockets/index.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const port = process.env.PORT || 3000;
 const app = express();
 
+app.use(cookieParser())
 app.use(cors({origin:"*", credentials: true}))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))

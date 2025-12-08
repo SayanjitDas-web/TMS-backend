@@ -25,7 +25,7 @@ export const createDocument = async (req, res) => {
 
 export const deleteDocument = async (req, res) => {
   try {
-    const { id } = req.id;
+    const { id } = req.body;
     if (!id) {
       res.status(401).json({
         success: false,
