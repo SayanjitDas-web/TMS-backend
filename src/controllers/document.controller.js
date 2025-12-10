@@ -8,7 +8,7 @@ export const createDocument = async (req, res) => {
         .status(401)
         .json({ success: false, message: "please provide a description and document name" });
     }
-    const document = await Document.create({ description });
+    const document = await Document.create({ docname , description });
     if (!document) {
       res.status(400).json({
         success: false,
